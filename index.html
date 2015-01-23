@@ -1,0 +1,79 @@
+<html ng-app="app">
+
+<head>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.11/angular-ui-router.js"></script>
+    
+    <script src="./index.js"></script>
+    <script src="./controller.js"></script>
+    <script src="./factory.js"></script>
+    
+    <style>
+        /* Some css if needed */
+        .blocUser {
+           padding: 5px;
+        }
+
+        .blocWithBorder {
+            border: solid black 2px;
+            border-radius: 4px;
+        }
+
+        .imageUser {
+            margin:5px;
+            height: 140px;
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        
+        <div ui-view></div>
+        <script type="text/ng-template" id="index.html">
+            
+            <form class="row">
+                <input class="col-md-12 form-control" placeholder="Rechercher" type="text" ng-model="textSearch"></input>
+            </form>
+            <div class="row">
+                <div class="col-md-4  text-center blocUser" ng-repeat="user in listUsers | filter: {firstname: textSearch}">
+                    <div class="blocWithBorder">
+                        <div><img class="img-circle imageUser" ng-src="{{user.photo}}"/></div>
+                        <h3 class="nameUser">{{user.firstname}} {{user.lastname}}</h3>
+                        <a type="button" ui-sref="view({id: user.id})" class="btn btn-primary" >Voir le profile</a>
+                    </div>                    
+                </div>
+            </div>
+            
+        </script>
+        <script type="text/ng-template"  id="view.html">
+            
+            <div class="container blocWithBorder">
+                <div class="row">
+                    <div class="col-md-12 text-center"><img class="img-circle imageUser" ng-src="{{user.photo}}"/></div>
+                </div>
+                <div class="row">
+                    <h3 class="col-md-12 nameUser">{{user.firstname}} {{user.lastname}}</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>{{user.description}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <a type="button" ng-href="{{user.twitter}}" class="col-md-2 btn btn-primary" target="_blank">Voir sur Twitter</a>
+                    <a type="button" ui-sref="index" class="col-md-2 col-md-offset-8 btn btn-primary" >Retour</a>
+                </div>
+            </div>
+            
+        </script>
+    </div>
+</body>
+
+</html>
